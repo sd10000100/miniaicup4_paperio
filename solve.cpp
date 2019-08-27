@@ -1,5 +1,3 @@
-//#include "../nlohmann/json.hpp"
-//#include <iostream>
 #include <string>
 #include "gamestate.h"
 #include "graphcell.cpp"
@@ -36,123 +34,7 @@ struct Solve:Solver{
         state = GameStage(1);
     }
 
-
-    //// TODO: вынести это вот все в отдельный файл
-    //bool isNewLineOnTerritory(int next_x, int next_y,Player player, GameWorld world)
-    //{
-    ////    int next_x = cell.position[0];
-    ////    int next_y = cell.position[1];
-    //    for (auto line : player.territory)
-    //    {
-    //      if((abs(line[0] - next_x)<world.width/2 && abs(line[1] - next_y)<world.width/2))
-    //      {
-    //          return true;
-    //      }
-    //    }
-    //    return false;
-    //}
-
-    //bool isEnemyOnThisCellAndMyTailIsLonger(GraphCell cell,GameWorld world){
-    //    for(auto player : world.players){
-    //        int enemyPosX = player.second.position[0];
-    //        int enemyPosY = player.second.position[1];
-    //        for(int i=0 ; i<cell.direction.length();i++)
-    //        {
-    //            if(player.second.direction == "left")
-    //                enemyPosX = enemyPosX-30;
-    //            else if(player.second.direction == "right")
-    //                enemyPosX = enemyPosX+30;
-    //            else if(player.second.direction == "up")
-    //                enemyPosY =enemyPosY+30;
-    //            else if(player.second.direction == "down")
-    //                enemyPosY= enemyPosY-30;
-    //        }
-
-    //        if((abs(cell.position[0] - enemyPosX)<world.width/2 && abs(cell.position[1] - enemyPosY)<world.width/2) && world.me.lines.size()>player.second.lines.size())
-    //        {
-    //            //ктото наступил мне на хвост
-    //            return true;
-    //        }
-    //    }
-    //    return false;
-    //}
-
-
-    //bool isEnemySteppedOnMyTail(GraphCell cell,GameWorld world)
-    //{
-    //    for(auto player : world.players){
-    //        int enemyPosX = player.second.position[0];
-    //        int enemyPosY = player.second.position[1];
-    //        for(int i=0 ; i<cell.direction.length();i++)
-    //        {
-    //            if(player.second.direction == "left")
-    //                enemyPosX = enemyPosX-30;
-    //            else if(player.second.direction == "right")
-    //                enemyPosX = enemyPosX+30;
-    //            else if(player.second.direction == "up")
-    //                enemyPosY =enemyPosY+30;
-    //            else if(player.second.direction == "down")
-    //                enemyPosY= enemyPosY-30;
-    //        }
-    //        auto myNewLine = world.me.lines;
-    //        for(auto item : cell.path)
-    //        {
-    //            myNewLine.push_back(item);
-    //        }
-    //        for (auto line : myNewLine)
-    //        {
-    //          if((abs(line[0] - enemyPosX)<world.width/2 && abs(line[1] - enemyPosY)<world.width/2))
-    //          {
-    //              //ктото наступил мне на хвост
-    //              return true;
-    //          }
-    //        }
-
-    //    }
-    //    return false;
-    //}
-
-
-    //bool isEnemyOnMyTerritory(GraphCell cell,GameWorld world)
-    //{
-    //    for(auto player : world.players){
-    //        int enemyPosX = player.second.position[0];
-    //        int enemyPosY = player.second.position[1];
-    //        for(int i=0 ; i<cell.direction.length();i++)
-    //        {
-    //            if(player.second.direction == "left")
-    //                enemyPosX = enemyPosX-30;
-    //            else if(player.second.direction == "right")
-    //                enemyPosX = enemyPosX+30;
-    //            else if(player.second.direction == "up")
-    //                enemyPosY =enemyPosY+30;
-    //            else if(player.second.direction == "down")
-    //                enemyPosY= enemyPosY-30;
-    //        }
-    //        auto myNewLine = world.me.lines;
-    //        for(auto item : cell.path)
-    //        {
-    //            myNewLine.push_back(item);
-    //        }
-    //        for (auto line : myNewLine)
-    //        {
-    //          if((abs(line[0] - enemyPosX)<world.width/2 && abs(line[1] - enemyPosY)<world.width/2))
-    //          {
-    //              //ктото наступил мне на хвост
-    //              return true;
-    //          }
-    //        }
-
-    //    }
-    //    return false;
-    //}
-    //// TODO: вынести это вот все в отдельный файл
-
-
-
     // метод для отсечения краев и своего хвоста =)
-
-
 
     bool isSpaceOnMyTerritory(Player player, const GameWorld world)
     {
@@ -164,15 +46,12 @@ struct Solve:Solver{
         return false;
     }
 
-
-
     double FindPositiveWeight(GraphCell cell, GraphCell parent,const GameWorld world, GameStage &state)
     {
         int next_x = cell.position[0];
         int next_y = cell.position[1];
         double res = cell.positiveWeight;
 
-        // TODO: Проверять расположение врага к этому моменту
 
         if(state.stage==0)
         {
@@ -247,30 +126,15 @@ struct Solve:Solver{
                         for(auto player: world.players)
                         {
                             if(isPointOnMyTail(next_x,next_y,player.second, world))
-        //                    if(isPlayerNearest(player.first,world))
-        //                    {
-        //                      if((abs(player.second.position[0] - next_x)<world.width/2 && abs(player.second.position[1] - next_y)<world.width/2) && world.me.lines.size()<player.second.lines.size())
-        //                      {
                                   res*=1000.0;
-        //                      }
-        //                      else if ((abs(player.second.position[0] - next_x)<world.width/2 && abs(player.second.position[1] - next_y)<world.width/2) && world.me.lines.size()>player.second.lines.size())
-        //                      {
-        //                          res/=1000.0;
-        //                      }
-        //                    }
-
                         }
                     }
                 }
             }
-
-
         }
 
         if(state.stage==1)
         {
-
-            // почему 0?
             res = distToMyTerritory(next_x, next_y, world);
 
            for(auto player: world.players)
@@ -290,19 +154,16 @@ struct Solve:Solver{
 
         if(state.stage==2)
         {
-            // почему 0?
             state.stage=3;
         }
 
         if(state.stage==3)
         {
-            // почему 0?
             vector<vector<int>> temp = {};
             for(auto line : state.tempPositions)
             {
                 temp.push_back({line[0],line[1]});
             }
-            //vector<int> temp = state.tempPositions[state.tempPositions.size()-1];
             temp.push_back({next_x, next_y});
             res = SGauss(temp);
 
@@ -325,7 +186,6 @@ struct Solve:Solver{
 
         for (auto bonus : world.bonuses)
         {
-           // cerr<<bonus.type<<endl;
             if((bonus.type=="saw" || bonus.type=="n") && (abs(bonus.position[0] - next_x)<world.width/2 && abs(bonus.position[1] - next_y)<world.width/2))
             {
                 res *= 2000;
@@ -349,7 +209,6 @@ struct Solve:Solver{
             }
 
             if(isPlayerNearest(player.first,world)){
-                //cerr<<player.first<<endl;
                 int enemyPosX = player.second.position[0];
                 int enemyPosY = player.second.position[1];
                 for(int i=0 ; i<cell.direction.length();i++)
@@ -404,7 +263,7 @@ struct Solve:Solver{
     }
 
 
-        // всякенькие штрафы (убрать?)
+        // всякенькие штрафы
         if(distToMyTerritory(next_x,next_y,world)/30>state.treshold*sqrt(2))
         {
             res=res/(double)(distToMyTerritory(next_x,next_y,world)/30-state.treshold*sqrt(2));
@@ -503,9 +362,6 @@ struct Solve:Solver{
     }
 
 
-    // завести класс для решения задачи
-    // интерфейсы?
-
     vector<GraphCell> process(int stepCount, const GameWorld world, GameStage &state)
     {
         vector<GraphCell> vertexes = {};
@@ -523,54 +379,42 @@ struct Solve:Solver{
 
     string GetNextAction(GameWorld world)
     {
-                    double nearestEnemy = distToNearestEnemy(world)/(double)world.width;
-                    double nearestToMyTailEnemy = distToNearestToMyTailEnemy(world)/(double)world.width;
-                    //cerr<<"nearestEnemy "<<nearestEnemy<<endl;
+        double nearestEnemy = distToNearestEnemy(world)/(double)world.width;
+        double nearestToMyTailEnemy = distToNearestToMyTailEnemy(world)/(double)world.width;
 
-                    state.UpdateTreshold(min(nearestEnemy,nearestToMyTailEnemy),world);
-                    //stateGame.treshold = 0.5;
-                    vector<GraphCell> vertexes = {};
-                    vertexes = process(4, world,state);
-                    string next_step = "l";
-                    vector<int> targetPos = {};
-                    double max = -1;
-                        for (auto line : vertexes)
-                        {
-                            if (line.positiveWeight>max)
-                            {
-                                max = line.positiveWeight;
-                                next_step = line.direction[0];
-                                targetPos = line.position;
-                            }
-                        //if (stateGame.stage==0)
-                        //  cerr<<"Graph = "<<line.current<< " "<<line.direction<<" potential - "<<line.potential<<" positive -  "<<line.positiveWeight<<endl;
+        state.UpdateTreshold(min(nearestEnemy,nearestToMyTailEnemy),world);
+        vector<GraphCell> vertexes = {};
+        vertexes = process(4, world,state);
+        string next_step = "l";
+        vector<int> targetPos = {};
+        double max = -1;
+            for (auto line : vertexes)
+            {
+                if (line.positiveWeight>max)
+                {
+                    max = line.positiveWeight;
+                    next_step = line.direction[0];
+                    targetPos = line.position;
+                }
+            //if (stateGame.stage==0)
+            //  cerr<<"Graph = "<<line.current<< " "<<line.direction<<" potential - "<<line.potential<<" positive -  "<<line.positiveWeight<<endl;
 
-                        }
+            }
 
-                        int min = 10000;
-                        for (auto line : vertexes)
-                        {
-                            if (line.positiveWeight==max && targetPos[0]==line.position[0] && targetPos[1]==line.position[1] && line.direction.size()<min)
-                            {
-                                min = line.direction.size();
-                                next_step = line.direction[0];
-                            }
-                        }
-                        cerr << "from "<<world.me.direction<<" to "<<" - "<<next_step<<" stage "<<state.stage<<endl;
-                        state.countfSteps+=1;
-                        return DIR_SHORT_MAP[next_step];
-//                    if(world.type == "tick"){
-//                        nlohmann::json command;
-//                        command["command"]=DIR_SHORT_MAP[next_step];
-//                        stateGame.countfSteps+=1;
-//                        //cerr << "from "<<world.me.direction<<" to "<<next_step<<" - "<<command.dump()<<" stage "<<stateGame.stage<<endl;
-//                        cout << command.dump() << endl;
-//                    }
+            int min = 10000;
+            for (auto line : vertexes)
+            {
+                if (line.positiveWeight==max && targetPos[0]==line.position[0] && targetPos[1]==line.position[1] && line.direction.size()<min)
+                {
+                    min = line.direction.size();
+                    next_step = line.direction[0];
+                }
+            }
+            cerr << "from "<<world.me.direction<<" to "<<" - "<<next_step<<" stage "<<state.stage<<endl;
+            state.countfSteps+=1;
+            return DIR_SHORT_MAP[next_step];
 
-
-
-       // return "l";
-    };
+    }
 
     GameStage state;
 };

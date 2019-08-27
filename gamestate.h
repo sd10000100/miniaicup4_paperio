@@ -22,7 +22,6 @@ struct GameStage{
     // 2 - расширение
     // 3 - укрепление
     // 4 - захват
-
     // 5 - аварийное отступление
 
     void Update(GameWorld world);

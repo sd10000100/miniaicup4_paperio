@@ -46,24 +46,11 @@ using namespace std;
                             //cerr<<element<<endl;
                           bonuses.push_back(Bonus(element));
                        }
-//            for (auto& element : nlohmann::json::iterator_wrapper(bonuses_json)) {
-//                bonuses.push_back(Bonus(element.value() ,false));
-//            }
         }
         catch(nlohmann::json::exception& e)
         {
             //cerr << "ERROR in Parse World bonuses " <<  endl;
            // cerr << "message: " << e.what() << '\n' << "exception id: " << e.id <<  endl;
         }
-//cerr<<endl;
-//        for(auto playerItem : players)
-//        {
-//cerr<<playerItem.first<<  " lol " <<playerItem.second.score<<endl;
-//        }
-//cerr<<endl;
-//for(auto playerItem : bonuses)
-//{
-//cerr<<playerItem.first<<  " bon " <<playerItem.second.type<<endl;
-//}
     }
 
